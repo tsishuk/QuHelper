@@ -29,6 +29,20 @@ void MainWidget::btnLowClick()
 //[]
 
 
+void MainWidget::digiWidgetActivate()
+{
+    DigiWidget* sender = qobject_cast<DigiWidget*>(QObject::sender());
+    for (int i=0; i< (sizeof(m_digiWidget)/sizeof(m_digiWidget[0]));i++){
+        if (sender == m_digiWidget[i]){
+            m_lastActiveWidget = m_digiWidget[i];
+            qDebug()<<"Activate "<< i << " digiwidget";
+        }
+        else
+            m_digiWidget[i]->clearHighlight();
+    }
+}
+
+
 //[]
 void MainWidget::setupGui()
 {
@@ -40,14 +54,18 @@ void MainWidget::setupGui()
 
 
     m_clockWidget = new ClockWidget;
-    m_digiWidget1 = new DigiWidget(this, m_globalGridWidth);
-    m_digiWidget2 = new DigiWidget(this, m_globalGridWidth);
+    m_digiWidget[0] = new DigiWidget(this, m_globalGridWidth);
+    m_digiWidget[1] = new DigiWidget(this, m_globalGridWidth);
+    m_digiWidget[2] = new DigiWidget(this, m_globalGridWidth);
     QPushButton* btnHigh = new QPushButton("1");
     QPushButton* btnLow = new QPushButton("0");
 
 
     connect(btnHigh, SIGNAL(clicked()), this, SLOT(btnHighClick()));
     connect(btnLow, SIGNAL(clicked()), this, SLOT(btnLowClick()));
+    connect(m_digiWidget[0], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));
+    connect(m_digiWidget[1], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));
+    connect(m_digiWidget[2], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));
 
 
     vertLayout1->addWidget(btnHigh);
@@ -58,8 +76,9 @@ void MainWidget::setupGui()
     horLayout1->addLayout(vertLayout1);
 
     mainVertLayout->addLayout(horLayout1);
-    mainVertLayout->addWidget(m_digiWidget1);
-    mainVertLayout->addWidget(m_digiWidget2);
+    mainVertLayout->addWidget(m_digiWidget[0]);
+    mainVertLayout->addWidget(m_digiWidget[1]);
+    mainVertLayout->addWidget(m_digiWidget[2]);
     mainVertLayout->addStretch(1);
     this->setLayout(mainVertLayout);
 }

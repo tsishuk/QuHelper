@@ -16,14 +16,14 @@ public:
 public slots:
     void btnHighClick();
     void btnLowClick();
+    void digiWidgetActivate();
 
 private:
     void setupGui();
     ClockWidget* m_clockWidget;
-    DigiWidget* m_digiWidget1;
-    DigiWidget* m_digiWidget2;
-    int m_globalGridWidth;
+    DigiWidget* m_digiWidget[3];
     DigiWidget* m_lastActiveWidget;
+    int m_globalGridWidth;
 };
 
 #endif // MAINWIDGET_H

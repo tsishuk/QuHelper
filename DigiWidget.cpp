@@ -32,6 +32,16 @@ void DigiWidget::mouseMoveEvent(QMouseEvent *event)
     int right = (m_stopSelect.x()/m_gridWidth + 1) * m_gridWidth;
     m_highlightedRect = QRect(QPoint(left, 2), QPoint(right, this->height() - 2));
     update();
+    emit widgetActivated();
+}
+//[]
+
+
+//[]
+void DigiWidget::clearHighlight()
+{
+    m_highlightedRect = QRect();
+    update();
 }
 //[]
 
