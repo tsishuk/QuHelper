@@ -36,7 +36,6 @@ void DigiWidget::mouseMoveEvent(QMouseEvent *event)
 //[]
 
 
-
 //[]
 void DigiWidget::paintEvent(QPaintEvent *event)
 {
