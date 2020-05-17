@@ -10,9 +10,13 @@ class DigiWidget : public QWidget
 public:
     DigiWidget(QWidget* parent = nullptr, int gridWidth = 0);
     void clearHighlight();
+    static const int WIDGETS_WIDTH = 500;
+    int getLeftBorder(){return m_leftBorder;}
+    int getRightBorder(){return m_rightBorder;}
 
 signals:
     void widgetActivated();
+    void clearActivated();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -24,6 +28,10 @@ private:
     QPoint m_stopSelect;
     QRect m_highlightedRect;
     int m_gridWidth;
+    int* m_values;
+    int m_valuesCount;
+    int m_leftBorder;
+    int m_rightBorder;
 };
 
 

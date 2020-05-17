@@ -6,6 +6,7 @@ MainWidget::MainWidget(QWidget* parent):
     QWidget(parent),m_lastActiveWidget(nullptr)
 {
     m_globalGridWidth = 50;
+    m_digiWidgetsCount = 3;
     setMinimumSize(600, 300);
     setMaximumSize(600, 300);
     setupGui();
@@ -32,14 +33,23 @@ void MainWidget::btnLowClick()
 void MainWidget::digiWidgetActivate()
 {
     DigiWidget* sender = qobject_cast<DigiWidget*>(QObject::sender());
-    for (int i=0; i< (sizeof(m_digiWidget)/sizeof(m_digiWidget[0]));i++){
+    for (int i=0; i< (m_digiWidgetsCount);i++){
         if (sender == m_digiWidget[i]){
             m_lastActiveWidget = m_digiWidget[i];
-            qDebug()<<"Activate "<< i << " digiwidget";
+            //qDebug()<<"Activate "<< i << " digiwidget";
         }
         else
             m_digiWidget[i]->clearHighlight();
     }
+}
+
+
+void MainWidget::clearDWActivated()
+{
+    for (int i=0; i<m_digiWidgetsCount; i++){
+        m_digiWidget[i]->clearHighlight();
+    }
+    m_lastActiveWidget = nullptr;
 }
 
 
@@ -63,6 +73,10 @@ void MainWidget::setupGui()
 
     connect(btnHigh, SIGNAL(clicked()), this, SLOT(btnHighClick()));
     connect(btnLow, SIGNAL(clicked()), this, SLOT(btnLowClick()));
+    for (int i=0; i<m_digiWidgetsCount; i++){
+        connect(m_digiWidget[i], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));
+        connect(m_digiWidget[i], SIGNAL(clearActivated()), this, SLOT(clearDWActivated()));
+    }
     connect(m_digiWidget[0], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));
     connect(m_digiWidget[1], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));
     connect(m_digiWidget[2], SIGNAL(widgetActivated()), this, SLOT(digiWidgetActivate()));

@@ -6,8 +6,14 @@
 DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
     QWidget(parent), m_gridWidth(gridWidth)
 {
-    setMinimumSize(500, 50);
-    setMaximumSize(500, 50);
+    setMinimumSize(WIDGETS_WIDTH, 50);
+    setMaximumSize(WIDGETS_WIDTH, 50);
+    m_valuesCount = WIDGETS_WIDTH/m_gridWidth;
+    m_values = new int[m_valuesCount];
+    m_leftBorder = m_rightBorder = -1;
+    qDebug()<<"m_values size = "<< m_valuesCount;
+    for (int i=0; i<m_valuesCount;i++)
+        m_values[i] = 0;
     m_highlightedRect = QRect();
 }
 //[]
@@ -16,9 +22,11 @@ DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
 //[]
 void DigiWidget::mousePressEvent(QMouseEvent *event)
 {
+    m_leftBorder = m_rightBorder = -1;
     m_startSelect = event->pos();
     m_stopSelect = event->pos();
     m_highlightedRect = QRect();
+    emit clearActivated();
     update();
 }
 //[]
@@ -28,11 +36,13 @@ void DigiWidget::mousePressEvent(QMouseEvent *event)
 void DigiWidget::mouseMoveEvent(QMouseEvent *event)
 {
     m_stopSelect = event->pos();
-    int left = (m_startSelect.x()/m_gridWidth) * m_gridWidth;
-    int right = (m_stopSelect.x()/m_gridWidth + 1) * m_gridWidth;
+    m_leftBorder = m_startSelect.x()/m_gridWidth;
+    m_rightBorder = m_stopSelect.x()/m_gridWidth;
+    int left = (m_leftBorder) * m_gridWidth;
+    int right = (m_rightBorder + 1) * m_gridWidth;
     m_highlightedRect = QRect(QPoint(left, 2), QPoint(right, this->height() - 2));
-    update();
     emit widgetActivated();
+    update();
 }
 //[]
 
@@ -61,6 +71,7 @@ void DigiWidget::paintEvent(QPaintEvent *event)
 
     //paint Low Level line(paint this line by default with startup)
     painter.drawLine(0, 40, W, 40);
+
 
     pen.setStyle(Qt::DotLine);
     pen.setWidth(1);
