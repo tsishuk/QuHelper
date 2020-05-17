@@ -10,8 +10,8 @@ MainWidget::MainWidget(QWidget* parent):
     m_digiWidgetsCount = 3;
     m_currentBorders.first = -1;
     m_currentBorders.second = -1;
-    setMinimumSize(600, 300);
-    setMaximumSize(600, 300);
+    setMinimumSize(600, 400);
+    setMaximumSize(600, 400);
     setupGui();
 }
 //[1]
@@ -40,6 +40,18 @@ void MainWidget::btnLowClick()
 void MainWidget::btnInvertClick()
 {
     emit setInvert(m_lastActiveWidget);
+}
+//[]
+
+
+//[]
+void MainWidget::spinTactsChanged(int newTactsQuantity)
+{
+    //qDebug()<<"new Quantity = "<< newTactsQuantity;
+    if ((newTactsQuantity > 0) and (newTactsQuantity<30)){
+        m_globalGridWidth = WIDGETS_WIDTH/newTactsQuantity;
+        emit setTactsCount(newTactsQuantity);
+    }
 }
 //[]
 
@@ -80,7 +92,7 @@ void MainWidget::setupGui()
 {
     QVBoxLayout* mainVertLayout = new QVBoxLayout;
     QHBoxLayout* horLayout1 = new QHBoxLayout;
-    QVBoxLayout* vertLayout1 = new QVBoxLayout;
+    //QVBoxLayout* vertLayout1 = new QVBoxLayout;
     mainVertLayout->setSpacing(2);
     horLayout1->setSpacing(0);
 
@@ -92,9 +104,18 @@ void MainWidget::setupGui()
     QPushButton* btnHigh = new QPushButton("1");
     QPushButton* btnLow = new QPushButton("0");
     QPushButton*btnInvert = new QPushButton("<->");
-    btnHigh->setFont(QFont( "helvetica", 20, QFont::Bold, false ));
-    btnLow->setFont(QFont( "helvetica", 20, QFont::Bold, false ));
-    btnInvert->setFont(QFont( "helvetica", 20, QFont::Bold, false ));
+    spinTacts = new QSpinBox();
+    spinTacts->setMinimumSize(50,50);
+    spinTacts->setValue(16);
+    spinTacts->setStyleSheet("QSpinBox::up-button { width: 30px; height: 20px;}"
+                             "QSpinBox::up-button:hover { width: 30px; height: 20px;}"
+                             "QSpinBox::down-button { width: 30px; height: 20px;}"
+                             "QSpinBox::down-button:hover { width: 30px; height: 20px;}");
+    spinTacts->clearFocus();
+    btnHigh->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
+    btnLow->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
+    btnInvert->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
+    spinTacts->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
 
 
     connect(btnHigh, SIGNAL(clicked()), this, SLOT(btnHighClick()));
@@ -107,20 +128,17 @@ void MainWidget::setupGui()
         connect(this, SIGNAL(setLow(DigiWidget*)), m_digiWidget[i], SLOT(setLow(DigiWidget*)));
         connect(this, SIGNAL(setInvert(DigiWidget*)), m_digiWidget[i], SLOT(setInvert(DigiWidget*)));
     }
+    connect(spinTacts, SIGNAL(valueChanged(int)), this, SLOT(spinTactsChanged(int)));
+    connect(this, SIGNAL(setTactsCount(int)), m_clockWidget, SLOT(setTactsCount(int)));
 
-    //vertLayout1->addWidget(btnHigh);
-    //vertLayout1->addWidget(btnLow);
-    //vertLayout1->addWidget(btnInvert);
 
-    //horLayout1->addWidget(m_clockWidget);
-    //horLayout1->addLayout(vertLayout1);
-
-    //mainVertLayout->addLayout(horLayout1);
     horLayout1->setSpacing(0);
     horLayout1->addWidget(btnHigh);
     horLayout1->addWidget(btnLow);
     horLayout1->addWidget(btnInvert);
     horLayout1->addStretch(1);
+    horLayout1->addWidget(spinTacts);
+
 
     mainVertLayout->addWidget(m_clockWidget);
     mainVertLayout->addWidget(m_digiWidget[0]);
