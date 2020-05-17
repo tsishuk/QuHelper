@@ -15,8 +15,12 @@ public:
     int getRightBorder(){return m_rightBorder;}
 
 signals:
-    void widgetActivated();
+    void widgetActivated(int leftBorder, int rightBorder);
     void clearActivated();
+
+public slots:
+    void setHigh(DigiWidget* current);
+    void setLow(DigiWidget* current);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
