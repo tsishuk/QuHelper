@@ -18,10 +18,12 @@ public:
 signals:
     void setHigh(DigiWidget* currentDigi);
     void setLow(DigiWidget* currentDigi);
+    void setInvert(DigiWidget* currentDigi);
 
 public slots:
     void btnHighClick();
     void btnLowClick();
+    void btnInvertClick();
     void digiWidgetActivate(int leftBorder, int RightBorder);
     void clearDWActivated();
 

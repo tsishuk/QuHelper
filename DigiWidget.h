@@ -21,6 +21,7 @@ signals:
 public slots:
     void setHigh(DigiWidget* current);
     void setLow(DigiWidget* current);
+    void setInvert(DigiWidget* current);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -11,7 +11,7 @@ DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
     m_valuesCount = WIDGETS_WIDTH/m_gridWidth;
     m_values = new int[m_valuesCount];
     m_leftBorder = m_rightBorder = -1;
-    qDebug()<<"m_values size = "<< m_valuesCount;
+    //qDebug()<<"m_values size = "<< m_valuesCount;
     for (int i=0; i<m_valuesCount;i++)
         m_values[i] = 0;
     //m_values[1] = 1;
@@ -41,6 +41,8 @@ void DigiWidget::mouseMoveEvent(QMouseEvent *event)
     m_rightBorder = m_stopSelect.x()/m_gridWidth;
     int left = (m_leftBorder) * m_gridWidth;
     int right = (m_rightBorder + 1) * m_gridWidth;
+    if (right > m_gridWidth*m_valuesCount)
+        right = m_gridWidth*m_valuesCount;
     m_highlightedRect = QRect(QPoint(left, 2), QPoint(right, this->height() - 2));
     emit widgetActivated(m_leftBorder, m_rightBorder);
     update();
@@ -73,6 +75,18 @@ void DigiWidget::setLow(DigiWidget* current)
 
 
 //[]
+void DigiWidget::setInvert(DigiWidget* current)
+{
+    if (current == this){
+        for (int i=m_leftBorder; i<=m_rightBorder; i++)
+            m_values[i] ^= 1;
+        update();
+    }
+}
+//[]
+
+
+//[]
 void DigiWidget::clearHighlight()
 {
     m_highlightedRect = QRect();
@@ -94,13 +108,14 @@ void DigiWidget::paintEvent(QPaintEvent *event)
     QPen pen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter.setPen(pen);
 
-    //paint Low Level line(paint this line by default with startup)
-    //painter.drawLine(0, 40, W, 40);
+    //paint signal
     for (int i=0; i<m_valuesCount; i++){
         if (m_values[i] == 0)
             painter.drawLine(i*m_gridWidth, 40, (i+1)*m_gridWidth, 40);
         else
             painter.drawLine(i*m_gridWidth, 10, (i+1)*m_gridWidth, 10);
+        if ((m_values[i] != m_values[i-1]) and (i!=0))
+            painter.drawLine(i*m_gridWidth, 10, i*m_gridWidth, 40);
     }
 
 
