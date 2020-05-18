@@ -10,8 +10,8 @@ MainWidget::MainWidget(QWidget* parent):
     m_digiWidgetsCount = 5;
     m_currentBorders.first = -1;
     m_currentBorders.second = -1;
-    setMinimumSize(1110, 350);
-    setMaximumSize(1110, 350);
+    setMinimumSize(1140, 350);
+    setMaximumSize(1140, 350);
     setupGui();
 }
 //[1]
@@ -89,10 +89,22 @@ void MainWidget::setupGui()
     QHBoxLayout* horLayout1 = new QHBoxLayout;
     QHBoxLayout* mainHorLayout = new QHBoxLayout;
     QVBoxLayout* secondVertLayout = new QVBoxLayout;
+    QVBoxLayout* labelsVerLayout = new QVBoxLayout;
     mainVertLayout->setSpacing(2);
     horLayout1->setSpacing(0);
 
-
+    QLabel* clkLabel = new QLabel("CLK");
+    QLineEdit* aLineEdit = new QLineEdit("a");
+    QLineEdit* bLineEdit = new QLineEdit("b");
+    QLineEdit* cLineEdit = new QLineEdit("c");
+    QLineEdit* dLineEdit = new QLineEdit("d");
+    QLineEdit* eLineEdit = new QLineEdit("e");
+    clkLabel->setMaximumWidth(30);
+    aLineEdit->setMaximumWidth(30);
+    bLineEdit->setMaximumWidth(30);
+    cLineEdit->setMaximumWidth(30);
+    dLineEdit->setMaximumWidth(30);
+    eLineEdit->setMaximumWidth(30);
     m_clockWidget = new ClockWidget(this, m_globalGridWidth);
     m_digiWidget[0] = new DigiWidget(this, m_globalGridWidth);
     m_digiWidget[1] = new DigiWidget(this, m_globalGridWidth);
@@ -133,6 +145,19 @@ void MainWidget::setupGui()
     connect(spinTacts, SIGNAL(valueChanged(int)), this, SLOT(spinTactsChanged(int)));
     connect(this, SIGNAL(setTactsCount(int)), m_clockWidget, SLOT(setTactsCount(int)));
 
+    labelsVerLayout->addSpacing(30);
+    labelsVerLayout->addWidget(clkLabel);
+    labelsVerLayout->addSpacing(28);
+    labelsVerLayout->addWidget(aLineEdit);
+    labelsVerLayout->addSpacing(25);
+    labelsVerLayout->addWidget(bLineEdit);
+    labelsVerLayout->addSpacing(26);
+    labelsVerLayout->addWidget(cLineEdit);
+    labelsVerLayout->addSpacing(26);
+    labelsVerLayout->addWidget(dLineEdit);
+    labelsVerLayout->addSpacing(26);
+    labelsVerLayout->addWidget(eLineEdit);
+    labelsVerLayout->addStretch(1);
 
     secondVertLayout->setSpacing(0);
     secondVertLayout->addWidget(btnHigh);
@@ -151,6 +176,7 @@ void MainWidget::setupGui()
     //mainVertLayout->addLayout(horLayout1);
     mainVertLayout->addStretch(1);
 
+    mainHorLayout->addLayout(labelsVerLayout);
     mainHorLayout->addLayout(mainVertLayout);
     mainHorLayout->addStretch(1);
     mainHorLayout->addLayout(secondVertLayout);
