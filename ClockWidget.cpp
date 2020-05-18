@@ -20,7 +20,7 @@ ClockWidget::ClockWidget(QWidget* parent, int gridSize):
         m_lineEdits[i]->setStyleSheet("QLineEdit { background: rgb(236, 253, 172); selection-background-color: rgb(233, 99, 0); }");
         connect(m_lineEdits[i], SIGNAL(textChanged(const QString &)), this, SLOT(lineEditChanged(const QString &)));
     }
-
+    setTactsCount(32);
 }
 //[]
 

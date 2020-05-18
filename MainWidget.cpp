@@ -40,6 +40,29 @@ void MainWidget::btnInvertClick()
 }
 //[]
 
+//[]
+void MainWidget::btn1XClicked()
+{
+    emit set1X(m_lastActiveWidget);
+}
+//[]
+
+
+//[]
+void MainWidget::btn2XClicked()
+{
+    emit set2X(m_lastActiveWidget);
+}
+//[]
+
+
+//[]
+void MainWidget::btn3XClicked()
+{
+    emit set3X(m_lastActiveWidget);
+}
+//[]
+
 
 //[]
 void MainWidget::spinTactsChanged(int newTactsQuantity)
@@ -113,7 +136,10 @@ void MainWidget::setupGui()
     m_digiWidget[4] = new DigiWidget(this, m_globalGridWidth);
     QPushButton* btnHigh = new QPushButton("1");
     QPushButton* btnLow = new QPushButton("0");
-    QPushButton*btnInvert = new QPushButton("<->");
+    QPushButton*btnInvert = new QPushButton("inv");
+    QPushButton*btn1X = new QPushButton("1X");
+    QPushButton*btn2X = new QPushButton("2X");
+    QPushButton*btn3X = new QPushButton("3X");
 
 
     spinTacts = new QSpinBox();
@@ -128,18 +154,27 @@ void MainWidget::setupGui()
     btnHigh->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
     btnLow->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
     btnInvert->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
+    btn1X->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
+    btn2X->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
+    btn3X->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
     spinTacts->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
 
 
     connect(btnHigh, SIGNAL(clicked()), this, SLOT(btnHighClick()));
     connect(btnLow, SIGNAL(clicked()), this, SLOT(btnLowClick()));
     connect(btnInvert, SIGNAL(clicked()), this, SLOT(btnInvertClick()));
+    connect(btn1X, SIGNAL(clicked()), this, SLOT(btn1XClicked()));
+    connect(btn2X, SIGNAL(clicked()), this, SLOT(btn2XClicked()));
+    connect(btn3X, SIGNAL(clicked()), this, SLOT(btn3XClicked()));
     for (int i=0; i<m_digiWidgetsCount; i++){
         connect(m_digiWidget[i], SIGNAL(widgetActivated(int, int)), this, SLOT(digiWidgetActivate(int, int)));
         connect(m_digiWidget[i], SIGNAL(clearActivated()), this, SLOT(clearDWActivated()));
         connect(this, SIGNAL(setHigh(DigiWidget*)), m_digiWidget[i], SLOT(setHigh(DigiWidget*)));
         connect(this, SIGNAL(setLow(DigiWidget*)), m_digiWidget[i], SLOT(setLow(DigiWidget*)));
         connect(this, SIGNAL(setInvert(DigiWidget*)), m_digiWidget[i], SLOT(setInvert(DigiWidget*)));
+        connect(this, SIGNAL(set1X(DigiWidget*)), m_digiWidget[i], SLOT(set1X(DigiWidget*)));
+        connect(this, SIGNAL(set2X(DigiWidget*)), m_digiWidget[i], SLOT(set2X(DigiWidget*)));
+        connect(this, SIGNAL(set3X(DigiWidget*)), m_digiWidget[i], SLOT(set3X(DigiWidget*)));
         connect(this, SIGNAL(setTactsCount(int)), m_digiWidget[i], SLOT(setTactsCount(int)));
     }
     connect(spinTacts, SIGNAL(valueChanged(int)), this, SLOT(spinTactsChanged(int)));
@@ -159,9 +194,12 @@ void MainWidget::setupGui()
     labelsVerLayout->addWidget(eLineEdit);
     labelsVerLayout->addStretch(1);
 
-    secondVertLayout->setSpacing(0);
+    secondVertLayout->setSpacing(3);
     secondVertLayout->addWidget(btnHigh);
     secondVertLayout->addWidget(btnLow);
+    secondVertLayout->addWidget(btn1X);
+    secondVertLayout->addWidget(btn2X);
+    secondVertLayout->addWidget(btn3X);
     secondVertLayout->addWidget(btnInvert);
     secondVertLayout->addStretch(1);
     secondVertLayout->addWidget(spinTacts);
@@ -173,7 +211,6 @@ void MainWidget::setupGui()
     mainVertLayout->addWidget(m_digiWidget[2]);
     mainVertLayout->addWidget(m_digiWidget[3]);
     mainVertLayout->addWidget(m_digiWidget[4]);
-    //mainVertLayout->addLayout(horLayout1);
     mainVertLayout->addStretch(1);
 
     mainHorLayout->addLayout(labelsVerLayout);

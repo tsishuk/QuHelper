@@ -22,6 +22,9 @@ public slots:
     void setHigh(DigiWidget* current);
     void setLow(DigiWidget* current);
     void setInvert(DigiWidget* current);
+    void set1X(DigiWidget* current);
+    void set2X(DigiWidget* current);
+    void set3X(DigiWidget* current);
     void setTactsCount(int newTactsCount);
 
 protected:

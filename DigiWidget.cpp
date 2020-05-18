@@ -97,6 +97,68 @@ void DigiWidget::setInvert(DigiWidget* current)
 
 
 //[]
+void DigiWidget::set1X(DigiWidget* current)
+{
+    if (current == this){
+        int counter=0;
+        for (int i=m_leftBorder; i<=m_rightBorder; i++){
+            if ((counter++)%2)
+                m_values[i] = 1;
+            else {
+                m_values[i] = 0;
+            }
+        }
+        update();
+    }
+}
+//[]
+
+
+//[]
+void DigiWidget::set2X(DigiWidget* current)
+{
+    if (current == this){
+        int counter=0;
+        for (int i=m_leftBorder; i<=m_rightBorder; i+=2){
+            if ((counter++)%2){
+                m_values[i] = 1;
+                if (i<m_rightBorder) m_values[i+1] = 1;
+            }
+            else {
+                m_values[i] = 0;
+                if (i<m_rightBorder) m_values[i+1] = 0;
+            }
+        }
+        update();
+    }
+}
+//[]
+
+
+//[]
+void DigiWidget::set3X(DigiWidget* current)
+{
+    if (current == this){
+        int counter=0;
+        for (int i=m_leftBorder; i<=m_rightBorder; i+=3){
+            if ((counter++)%2){
+                m_values[i] = 1;
+                if (i<m_rightBorder) m_values[i+1] = 1;
+                if (i<(m_rightBorder-1)) m_values[i+2] = 1;
+            }
+            else {
+                m_values[i] = 0;
+                if (i<m_rightBorder) m_values[i+1] = 0;
+                if (i<(m_rightBorder-1)) m_values[i+2] = 0;
+            }
+        }
+        update();
+    }
+}
+//[]
+
+
+//[]
 void DigiWidget::clearHighlight()
 {
     m_highlightedRect = QRect();

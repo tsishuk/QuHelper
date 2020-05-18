@@ -19,12 +19,18 @@ signals:
     void setHigh(DigiWidget* currentDigi);
     void setLow(DigiWidget* currentDigi);
     void setInvert(DigiWidget* currentDigi);
+    void set1X(DigiWidget* currentDigi);
+    void set2X(DigiWidget* currentDigi);
+    void set3X(DigiWidget* currentDigi);
     void setTactsCount(int newTactsCount);
 
 public slots:
     void btnHighClick();
     void btnLowClick();
     void btnInvertClick();
+    void btn1XClicked();
+    void btn2XClicked();
+    void btn3XClicked();
     void digiWidgetActivate(int leftBorder, int RightBorder);
     void clearDWActivated();
     void spinTactsChanged(int newTactsQuantity);
