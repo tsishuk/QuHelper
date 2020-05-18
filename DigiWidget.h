@@ -8,9 +8,9 @@ class DigiWidget : public QWidget
     Q_OBJECT
 
 public:
-    DigiWidget(QWidget* parent = nullptr, int gridWidth = 0);
+    DigiWidget(QWidget* parent = NULL, int gridWidth = 0);
     void clearHighlight();
-    static const int WIDGETS_WIDTH = 500;
+    static const int WIDGETS_WIDTH = 1000;
     int getLeftBorder(){return m_leftBorder;}
     int getRightBorder(){return m_rightBorder;}
 

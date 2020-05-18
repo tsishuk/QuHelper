@@ -5,8 +5,8 @@
 ClockWidget::ClockWidget(QWidget* parent, int gridSize):
     QWidget(parent), m_gridWidth(gridSize)
 {
-    setMinimumSize(500, 60);
-    setMaximumSize(500, 60);
+    setMinimumSize(1000, 60);
+    setMaximumSize(1000, 60);
     m_tactsCount = WIDGETS_WIDTH/m_gridWidth;
 
     for (int i=0; i<30; i++){

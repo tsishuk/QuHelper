@@ -3,15 +3,15 @@
 
 //[1]
 MainWidget::MainWidget(QWidget* parent):
-    QWidget(parent),m_lastActiveWidget(nullptr)
+    QWidget(parent),m_lastActiveWidget(NULL)
 {
     m_globalGridWidth = 30;
 
     m_digiWidgetsCount = 3;
     m_currentBorders.first = -1;
     m_currentBorders.second = -1;
-    setMinimumSize(600, 400);
-    setMaximumSize(600, 400);
+    setMinimumSize(1100, 400);
+    setMaximumSize(1100, 400);
     setupGui();
 }
 //[1]
@@ -75,7 +75,7 @@ void MainWidget::clearDWActivated()
     for (int i=0; i<m_digiWidgetsCount; i++){
         m_digiWidget[i]->clearHighlight();
     }
-    m_lastActiveWidget = nullptr;
+    m_lastActiveWidget = NULL;
     m_currentBorders.first = -1;
     m_currentBorders.second = -1;
 }
@@ -117,6 +117,7 @@ void MainWidget::setupGui()
                              "QSpinBox::down-button { width: 30px; height: 20px;}"
                              "QSpinBox::down-button:hover { width: 30px; height: 20px;}");
     spinTacts->clearFocus();
+    spinTacts->setMaximum(50);
     btnHigh->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
     btnLow->setFont(QFont( "helvetica", 20, QFont::Medium, false ));
     btnInvert->setFont(QFont( "helvetica", 20, QFont::Medium, false ));

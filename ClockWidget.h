@@ -7,8 +7,8 @@ class ClockWidget : public QWidget
     Q_OBJECT
 
 public:
-    ClockWidget(QWidget* parent = nullptr, int gridSize = 50);
-    static const int WIDGETS_WIDTH = 500;
+    ClockWidget(QWidget* parent = NULL, int gridSize = 50);
+    static const int WIDGETS_WIDTH = 1000;
 
 public slots:
     void setTactsCount(int newTactsCount);

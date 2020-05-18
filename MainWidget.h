@@ -12,8 +12,8 @@ class MainWidget : public QWidget
     Q_OBJECT
 
 public:
-    MainWidget(QWidget* parent = nullptr);
-    static const int WIDGETS_WIDTH = 500;
+    MainWidget(QWidget* parent = NULL);
+    static const int WIDGETS_WIDTH = 1000;
 
 signals:
     void setHigh(DigiWidget* currentDigi);
