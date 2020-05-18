@@ -46,9 +46,21 @@ void DigiWidget::mousePressEvent(QMouseEvent *event)
 //[]
 void DigiWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    QPoint tempLeft, tempRight;
     m_stopSelect = event->pos();
-    m_leftBorder = m_startSelect.x()/m_gridWidth;
-    m_rightBorder = m_stopSelect.x()/m_gridWidth;
+
+    if (m_startSelect.x() < m_stopSelect.x()){
+        tempLeft = m_startSelect;
+        tempRight = m_stopSelect;
+    }
+    else {
+        tempLeft = m_stopSelect;
+        tempRight = m_startSelect;
+    }
+
+    m_leftBorder = tempLeft.x()/m_gridWidth;
+    m_rightBorder = tempRight.x()/m_gridWidth;
+
     int left = (m_leftBorder) * m_gridWidth;
     int right = (m_rightBorder + 1) * m_gridWidth;
     if (right > m_gridWidth*m_valuesCount)
