@@ -1,6 +1,6 @@
 #include "DigiWidget.h"
 
-#define MAX_VALUES_COUNT 29
+#define MAX_VALUES_COUNT 50
 
 //[]
 DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
@@ -14,6 +14,7 @@ DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
     for (int i=0; i<MAX_VALUES_COUNT;i++)
         m_values[i] = 0;
     m_highlightedRect = QRect();
+    setTactsCount(16);
 }
 //[]
 
@@ -24,7 +25,6 @@ void DigiWidget::setTactsCount(int newTactsCount)
     m_tactsCount = newTactsCount;
     m_gridWidth = WIDGETS_WIDTH/m_tactsCount;
     m_valuesCount = m_tactsCount;
-    //m_valuesCount = WIDGETS_WIDTH/m_gridWidth;
     update();
 }
 //[]
@@ -136,8 +136,10 @@ void DigiWidget::paintEvent(QPaintEvent *event)
     //paint grid lines
     pen.setColor(QColor("#595959"));
     painter.setPen(pen);
-    for (int i=m_gridWidth; i<W; i+= m_gridWidth)
-        painter.drawLine(i, 0, i, H);
+    //for (int i=m_gridWidth; i<W; i+= m_gridWidth)
+        //painter.drawLine(i, 0, i, H);
+    for(int i=1; i<m_tactsCount; i++)
+        painter.drawLine(i*m_gridWidth, 0, i*m_gridWidth, H);
 
     //fill highlighted Rect
     QBrush brush = QBrush(Qt::Dense5Pattern);

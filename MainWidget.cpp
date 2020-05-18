@@ -44,7 +44,7 @@ void MainWidget::btnInvertClick()
 //[]
 void MainWidget::spinTactsChanged(int newTactsQuantity)
 {
-    if ((newTactsQuantity > 0) and (newTactsQuantity<30)){
+    if ((newTactsQuantity > 0) and (newTactsQuantity<50)){
         m_globalGridWidth = WIDGETS_WIDTH/newTactsQuantity;
         emit setTactsCount(newTactsQuantity);
     }
@@ -99,6 +99,16 @@ void MainWidget::setupGui()
     QPushButton* btnHigh = new QPushButton("1");
     QPushButton* btnLow = new QPushButton("0");
     QPushButton*btnInvert = new QPushButton("<->");
+    /*
+    QLineEdit* edit1 = new QLineEdit(m_clockWidget);
+    edit1->setText("5");
+    edit1->setFixedSize(15,15);
+    edit1->move(m_globalGridWidth,0);
+    QLineEdit* edit2 = new QLineEdit(m_clockWidget);
+    edit2->setText("6");
+    edit2->setFixedSize(15,15);
+    edit2->move(m_globalGridWidth*3,0);
+    */
     spinTacts = new QSpinBox();
     spinTacts->setMinimumSize(50,50);
     spinTacts->setValue(16);
@@ -143,6 +153,7 @@ void MainWidget::setupGui()
     mainVertLayout->addLayout(horLayout1);
     mainVertLayout->addStretch(1);
     this->setLayout(mainVertLayout);
+    btnHigh->setFocus();
 }
 //[]
 

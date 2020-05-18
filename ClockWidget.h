@@ -12,6 +12,7 @@ public:
 
 public slots:
     void setTactsCount(int newTactsCount);
+    void lineEditChanged(const QString &text);
 
 
 protected:
@@ -20,6 +21,7 @@ protected:
 private:
     int m_gridWidth;
     int m_tactsCount;
+    QLineEdit* m_lineEdits[30];
 };
 
 #endif // CLOCKWIDGET_H

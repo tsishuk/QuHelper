@@ -27,7 +27,7 @@ public slots:
     void btnInvertClick();
     void digiWidgetActivate(int leftBorder, int RightBorder);
     void clearDWActivated();
-        void spinTactsChanged(int newTactsQuantity);
+    void spinTactsChanged(int newTactsQuantity);
 
 private:
     void setupGui();
