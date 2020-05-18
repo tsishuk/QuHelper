@@ -14,7 +14,7 @@ DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
     for (int i=0; i<MAX_VALUES_COUNT;i++)
         m_values[i] = 0;
     m_highlightedRect = QRect();
-    setTactsCount(16);
+    setTactsCount(32);
 }
 //[]
 

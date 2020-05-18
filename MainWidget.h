@@ -32,7 +32,7 @@ public slots:
 private:
     void setupGui();
     ClockWidget* m_clockWidget;
-    DigiWidget* m_digiWidget[3];
+    DigiWidget* m_digiWidget[5];
     int m_digiWidgetsCount;
     DigiWidget* m_lastActiveWidget;
     QPair<int, int> m_currentBorders;

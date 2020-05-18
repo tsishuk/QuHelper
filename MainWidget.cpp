@@ -7,11 +7,11 @@ MainWidget::MainWidget(QWidget* parent):
 {
     m_globalGridWidth = 30;
 
-    m_digiWidgetsCount = 3;
+    m_digiWidgetsCount = 5;
     m_currentBorders.first = -1;
     m_currentBorders.second = -1;
-    setMinimumSize(1100, 400);
-    setMaximumSize(1100, 400);
+    setMinimumSize(1110, 350);
+    setMaximumSize(1110, 350);
     setupGui();
 }
 //[1]
@@ -87,7 +87,8 @@ void MainWidget::setupGui()
 {
     QVBoxLayout* mainVertLayout = new QVBoxLayout;
     QHBoxLayout* horLayout1 = new QHBoxLayout;
-    //QVBoxLayout* vertLayout1 = new QVBoxLayout;
+    QHBoxLayout* mainHorLayout = new QHBoxLayout;
+    QVBoxLayout* secondVertLayout = new QVBoxLayout;
     mainVertLayout->setSpacing(2);
     horLayout1->setSpacing(0);
 
@@ -96,22 +97,16 @@ void MainWidget::setupGui()
     m_digiWidget[0] = new DigiWidget(this, m_globalGridWidth);
     m_digiWidget[1] = new DigiWidget(this, m_globalGridWidth);
     m_digiWidget[2] = new DigiWidget(this, m_globalGridWidth);
+    m_digiWidget[3] = new DigiWidget(this, m_globalGridWidth);
+    m_digiWidget[4] = new DigiWidget(this, m_globalGridWidth);
     QPushButton* btnHigh = new QPushButton("1");
     QPushButton* btnLow = new QPushButton("0");
     QPushButton*btnInvert = new QPushButton("<->");
-    /*
-    QLineEdit* edit1 = new QLineEdit(m_clockWidget);
-    edit1->setText("5");
-    edit1->setFixedSize(15,15);
-    edit1->move(m_globalGridWidth,0);
-    QLineEdit* edit2 = new QLineEdit(m_clockWidget);
-    edit2->setText("6");
-    edit2->setFixedSize(15,15);
-    edit2->move(m_globalGridWidth*3,0);
-    */
+
+
     spinTacts = new QSpinBox();
     spinTacts->setMinimumSize(50,50);
-    spinTacts->setValue(16);
+    spinTacts->setValue(31);
     spinTacts->setStyleSheet("QSpinBox::up-button { width: 30px; height: 20px;}"
                              "QSpinBox::up-button:hover { width: 30px; height: 20px;}"
                              "QSpinBox::down-button { width: 30px; height: 20px;}"
@@ -139,21 +134,27 @@ void MainWidget::setupGui()
     connect(this, SIGNAL(setTactsCount(int)), m_clockWidget, SLOT(setTactsCount(int)));
 
 
-    horLayout1->setSpacing(0);
-    horLayout1->addWidget(btnHigh);
-    horLayout1->addWidget(btnLow);
-    horLayout1->addWidget(btnInvert);
-    horLayout1->addStretch(1);
-    horLayout1->addWidget(spinTacts);
+    secondVertLayout->setSpacing(0);
+    secondVertLayout->addWidget(btnHigh);
+    secondVertLayout->addWidget(btnLow);
+    secondVertLayout->addWidget(btnInvert);
+    secondVertLayout->addStretch(1);
+    secondVertLayout->addWidget(spinTacts);
 
 
     mainVertLayout->addWidget(m_clockWidget);
     mainVertLayout->addWidget(m_digiWidget[0]);
     mainVertLayout->addWidget(m_digiWidget[1]);
     mainVertLayout->addWidget(m_digiWidget[2]);
-    mainVertLayout->addLayout(horLayout1);
+    mainVertLayout->addWidget(m_digiWidget[3]);
+    mainVertLayout->addWidget(m_digiWidget[4]);
+    //mainVertLayout->addLayout(horLayout1);
     mainVertLayout->addStretch(1);
-    this->setLayout(mainVertLayout);
+
+    mainHorLayout->addLayout(mainVertLayout);
+    mainHorLayout->addStretch(1);
+    mainHorLayout->addLayout(secondVertLayout);
+    this->setLayout(mainHorLayout);
     btnHigh->setFocus();
 }
 //[]
