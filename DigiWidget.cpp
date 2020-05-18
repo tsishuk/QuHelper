@@ -1,6 +1,6 @@
 #include "DigiWidget.h"
 
-
+#define MAX_VALUES_COUNT 29
 
 //[]
 DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
@@ -9,13 +9,23 @@ DigiWidget::DigiWidget(QWidget* parent, int gridWidth):
     setMinimumSize(WIDGETS_WIDTH, 50);
     setMaximumSize(WIDGETS_WIDTH, 50);
     m_valuesCount = WIDGETS_WIDTH/m_gridWidth;
-    m_values = new int[m_valuesCount];
+    m_values = new int[MAX_VALUES_COUNT];
     m_leftBorder = m_rightBorder = -1;
-    //qDebug()<<"m_values size = "<< m_valuesCount;
-    for (int i=0; i<m_valuesCount;i++)
+    for (int i=0; i<MAX_VALUES_COUNT;i++)
         m_values[i] = 0;
-    //m_values[1] = 1;
     m_highlightedRect = QRect();
+}
+//[]
+
+
+//[]
+void DigiWidget::setTactsCount(int newTactsCount)
+{
+    m_tactsCount = newTactsCount;
+    m_gridWidth = WIDGETS_WIDTH/m_tactsCount;
+    m_valuesCount = m_tactsCount;
+    //m_valuesCount = WIDGETS_WIDTH/m_gridWidth;
+    update();
 }
 //[]
 
@@ -43,7 +53,7 @@ void DigiWidget::mouseMoveEvent(QMouseEvent *event)
     int right = (m_rightBorder + 1) * m_gridWidth;
     if (right > m_gridWidth*m_valuesCount)
         right = m_gridWidth*m_valuesCount;
-    m_highlightedRect = QRect(QPoint(left, 2), QPoint(right, this->height() - 2));
+    m_highlightedRect = QRect(QPoint(left, 1), QPoint(right, this->height() - 2));
     emit widgetActivated(m_leftBorder, m_rightBorder);
     update();
 }
@@ -124,7 +134,7 @@ void DigiWidget::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     //paint grid lines
-    pen.setColor(QColor("#A4A4A4"));
+    pen.setColor(QColor("#595959"));
     painter.setPen(pen);
     for (int i=m_gridWidth; i<W; i+= m_gridWidth)
         painter.drawLine(i, 0, i, H);

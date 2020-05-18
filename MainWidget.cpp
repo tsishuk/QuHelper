@@ -20,9 +20,7 @@ MainWidget::MainWidget(QWidget* parent):
 //[]
 void MainWidget::btnHighClick()
 {
-    //qDebug()<< "btnHigh click";
     emit setHigh(m_lastActiveWidget);
-    //qDebug()<<"left = "<<m_currentBorders.first<<" right = "<<m_currentBorders.second;
 }
 //[]
 
@@ -31,7 +29,6 @@ void MainWidget::btnHighClick()
 void MainWidget::btnLowClick()
 {
     emit setLow(m_lastActiveWidget);
-    //qDebug()<< "btnLow click";
 }
 //[]
 
@@ -47,7 +44,6 @@ void MainWidget::btnInvertClick()
 //[]
 void MainWidget::spinTactsChanged(int newTactsQuantity)
 {
-    //qDebug()<<"new Quantity = "<< newTactsQuantity;
     if ((newTactsQuantity > 0) and (newTactsQuantity<30)){
         m_globalGridWidth = WIDGETS_WIDTH/newTactsQuantity;
         emit setTactsCount(newTactsQuantity);
@@ -63,7 +59,6 @@ void MainWidget::digiWidgetActivate(int leftBorder, int rightBorder)
     for (int i=0; i< (m_digiWidgetsCount);i++){
         if (sender == m_digiWidget[i]){
             m_lastActiveWidget = m_digiWidget[i];
-            //qDebug()<<"Activate "<< i << " digiwidget";
         }
         else
             m_digiWidget[i]->clearHighlight();
@@ -127,6 +122,7 @@ void MainWidget::setupGui()
         connect(this, SIGNAL(setHigh(DigiWidget*)), m_digiWidget[i], SLOT(setHigh(DigiWidget*)));
         connect(this, SIGNAL(setLow(DigiWidget*)), m_digiWidget[i], SLOT(setLow(DigiWidget*)));
         connect(this, SIGNAL(setInvert(DigiWidget*)), m_digiWidget[i], SLOT(setInvert(DigiWidget*)));
+        connect(this, SIGNAL(setTactsCount(int)), m_digiWidget[i], SLOT(setTactsCount(int)));
     }
     connect(spinTacts, SIGNAL(valueChanged(int)), this, SLOT(spinTactsChanged(int)));
     connect(this, SIGNAL(setTactsCount(int)), m_clockWidget, SLOT(setTactsCount(int)));

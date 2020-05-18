@@ -22,6 +22,7 @@ public slots:
     void setHigh(DigiWidget* current);
     void setLow(DigiWidget* current);
     void setInvert(DigiWidget* current);
+    void setTactsCount(int newTactsCount);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -37,6 +38,7 @@ private:
     int m_valuesCount;
     int m_leftBorder;
     int m_rightBorder;
+    int m_tactsCount;
 };
 
 
